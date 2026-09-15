@@ -20,7 +20,7 @@ export default function Home() {
     setItems(items.map(item => item.id === id ? { ...item, content: newContent } : item));
   };
 
-  // 新しい質問を追加する処理
+  // 新しい質問カードを自由に追加する処理
   const handleAddItem = (e) => {
     e.preventDefault();
     if (!newTitle.trim()) return;
@@ -33,6 +33,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#4A3E3D] px-4 py-6 font-sans">
+      {/* スマホ幅にぴったり納める枠（max-w-md） */}
       <div className="max-w-md mx-auto space-y-5">
         
         {/* スマホ最適化トップバナー */}
@@ -44,7 +45,7 @@ export default function Home() {
           />
         </header>
 
-        {/* 新しい質問を追加するエリア */}
+        {/* 新しい「癖つよ質問」を自分で追加できるフォーム */}
         <section className="bg-white border-2 border-[#F4A69A]/60 rounded-2xl p-4 shadow-sm">
           <h2 className="text-xs font-bold text-[#F4A69A] mb-2 flex items-center gap-1.5">
             <span>✦</span> 新しい偏愛タイトルを追加する
@@ -66,10 +67,10 @@ export default function Home() {
           </form>
         </section>
 
-        {/* 偏愛カード＆入力エリア一覧 */}
+        {/* 偏愛カード＆回答入力エリア一覧 */}
         <main className="space-y-4">
           <p className="text-xs font-bold text-[#4A3E3D]/60 px-1">
-            ▼ 偏愛カード（タップして書き込めます）
+            ▼ 偏愛カード（タップして自由に書き込めます）
           </p>
           {items.map((item) => (
             <div key={item.id} className="bg-white border border-[#A3C9A8]/40 rounded-2xl p-4 shadow-sm space-y-2">
@@ -80,7 +81,7 @@ export default function Home() {
               <textarea
                 value={item.content}
                 onChange={(e) => handleUpdate(item.id, e.target.value)}
-                placeholder="思い立ったら自由に書き込み・上書きしてね..."
+                placeholder="思い立ったらここに自由に書き込んでね..."
                 className="w-full bg-[#FAF8F5] text-[#4A3E3D] p-3 rounded-xl border border-[#A3C9A8]/30 focus:border-[#F4A69A] focus:outline-none resize-none h-24 text-sm leading-relaxed placeholder-[#4A3E3D]/30"
               />
             </div>
