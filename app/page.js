@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 
 export default function Home() {
-  // 初期質問リスト
+  // 初期質問リスト（癖つよ例題）
   const [items, setItems] = useState([
     { id: 1, title: '最近よく検索する動画', content: '' },
     { id: 2, title: '読みたくて買ったけど読んでいない本', content: '' },
@@ -12,15 +12,15 @@ export default function Home() {
     { id: 5, title: '最近ハマっていること', content: '' },
   ]);
 
-  // 新しい質問を追加するためのステート
+  // 新しい質問タイトルを入れるステート
   const [newTitle, setNewTitle] = useState('');
 
-  // 既存の回答を書き換える処理
+  // 回答の書き換え処理
   const handleUpdate = (id, newContent) => {
     setItems(items.map(item => item.id === id ? { ...item, content: newContent } : item));
   };
 
-  // 新しい質問カードを自由に追加する処理
+  // 新しい質問を追加する処理
   const handleAddItem = (e) => {
     e.preventDefault();
     if (!newTitle.trim()) return;
@@ -33,7 +33,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#4A3E3D] px-4 py-6 font-sans">
-      {/* スマホ幅に納めるコンテナ（max-w-md） */}
       <div className="max-w-md mx-auto space-y-5">
         
         {/* スマホ最適化トップバナー */}
@@ -41,11 +40,11 @@ export default function Home() {
           <img
             src="/katati.png"
             alt="watasiwo かたちづくるもの 偏愛Tool"
-            className="w-full h-auto object-contain rounded-xl"
+            className="w-full h-auto object-contain rounded-xl block"
           />
         </header>
 
-        {/* 新しい「癖つよ質問」を自分で追加できる入力エリア */}
+        {/* 新しい質問を追加するエリア */}
         <section className="bg-white border-2 border-[#F4A69A]/60 rounded-2xl p-4 shadow-sm">
           <h2 className="text-xs font-bold text-[#F4A69A] mb-2 flex items-center gap-1.5">
             <span>✦</span> 新しい偏愛タイトルを追加する
@@ -53,7 +52,7 @@ export default function Home() {
           <form onSubmit={handleAddItem} className="flex gap-2">
             <input
               type="text"
-              placeholder="例：夜中に突然食べたくなるもの"
+              placeholder="例：深夜に衝動買いしたもの"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               className="flex-1 bg-[#FAF8F5] text-[#4A3E3D] p-2.5 rounded-xl border border-[#A3C9A8]/40 focus:border-[#F4A69A] focus:outline-none text-sm placeholder-[#4A3E3D]/40"
@@ -67,10 +66,10 @@ export default function Home() {
           </form>
         </section>
 
-        {/* 質問＆回答入力カード一覧 */}
+        {/* 偏愛カード＆入力エリア一覧 */}
         <main className="space-y-4">
           <p className="text-xs font-bold text-[#4A3E3D]/60 px-1">
-            ▼ 偏愛カード（枠内をタップして入力できます）
+            ▼ 偏愛カード（タップして書き込めます）
           </p>
           {items.map((item) => (
             <div key={item.id} className="bg-white border border-[#A3C9A8]/40 rounded-2xl p-4 shadow-sm space-y-2">
@@ -81,7 +80,7 @@ export default function Home() {
               <textarea
                 value={item.content}
                 onChange={(e) => handleUpdate(item.id, e.target.value)}
-                placeholder="思い立ったらここに自由に書き込んでね..."
+                placeholder="思い立ったら自由に書き込み・上書きしてね..."
                 className="w-full bg-[#FAF8F5] text-[#4A3E3D] p-3 rounded-xl border border-[#A3C9A8]/30 focus:border-[#F4A69A] focus:outline-none resize-none h-24 text-sm leading-relaxed placeholder-[#4A3E3D]/30"
               />
             </div>
