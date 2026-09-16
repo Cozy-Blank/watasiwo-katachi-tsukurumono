@@ -1,0 +1,3 @@
+module.exports=[38502,a=>{a.v({className:"m_plus_rounded_1c_4d170df4-module__8f1aJq__className"})},62925,a=>{"use strict";var b=a.i(7997),c=a.i(38502);let d={className:c.default.className,style:{fontFamily:"'M PLUS Rounded 1c', 'M PLUS Rounded 1c Fallback'",fontStyle:"normal"}};null!=c.default.variable&&(d.variable=c.default.variable),a.s(["default",0,function({children:a}){return(0,b.jsx)("html",{lang:"ja",className:d.className,children:(0,b.jsx)("body",{className:"bg-slate-100 text-slate-800 antialiased",children:a})})},"metadata",0,{title:"わたしをかたちづくるもの",description:"100の偏愛＆クセつよ質問リスト"}],62925)},19325,function(a){a.n(a.i(62925))}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__16k091i._.js.map
