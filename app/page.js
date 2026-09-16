@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { questions } from '@/data/questions';
+import { questions } from '../data/questions';
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("存在と自己");
