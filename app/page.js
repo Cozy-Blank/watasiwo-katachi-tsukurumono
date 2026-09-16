@@ -1,219 +1,111 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import { questions } from "@/data/questions";
 
 export default function Home() {
-  const sections = [
-    {
-      title: "日常の行い・ひそかな癖",
-      icon: "🌙",
-      questions: [
-        { id: "Q.1", text: "疲れた夜に無心で観てしまう動画のジャンル" },
-        { id: "Q.2", text: "なぜか捨てられずに放置している謎のガジェット・小物" },
-        { id: "Q.3", text: "家に一人でいるときだけやっている無意味な動作" },
-        { id: "Q.4", text: "コンビニに入ると用もないのに必ずチェックしてしまうコーナー" },
-        { id: "Q.5", text: "集中したい時に無意識に聴いているマニアックなBGM" },
-        { id: "Q.6", text: "風呂場でつい考えてしまうくだらない議論" },
-        { id: "Q.7", text: "人には理解されない自分だけの快感・マニアックな瞬間" },
-        { id: "Q.8", text: "爪を伸ばす・切るタイミングの自分ルール" },
-        { id: "Q.9", text: "スマホの検索履歴の最新3つ（恥ずかしいやつ）" },
-        { id: "Q.10", text: "洗濯物をたたむときに譲れないマイルール" },
-      ],
-    },
-    {
-      title: "思考・妄想・脳内再生",
-      icon: "💭",
-      questions: [
-        { id: "Q.11", text: "もし明日地球が終わるなら最後に食べる「B級グルメ」" },
-        { id: "Q.12", text: "脳内で100万回再生された過去の恥ずかしいフラッシュバック" },
-        { id: "Q.13", text: "宝くじで10億円当たったら最初に買う「誰も得しないもの」" },
-        { id: "Q.14", text: "妄想の中で自分が無双しているシチュエーション" },
-        { id: "Q.15", text: "死ぬまでに一度は言ってみたい格好つけたセリフ" },
-        { id: "Q.16", text: "実は密かに憧れている「フィクションの職業」" },
-        { id: "Q.17", text: "自分だけの世界観に浸れる最高の「妄想BGM」" },
-        { id: "Q.18", text: "自分が映画の主人公だったら流れてほしいエンディング曲" },
-        { id: "Q.19", text: "理由はないけれど、昔からなぜか惹かれる言葉・単語" },
-        { id: "Q.20", text: "生まれ変わったらなってみたい「人間以外のもの」" },
-      ],
-    },
-    {
-      title: "食・味覚の偏愛",
-      icon: "🍳",
-      questions: [
-        { id: "Q.21", text: "他人には見せられない「ズボラ飯・奇妙な食べ合わせ」" },
-        { id: "Q.22", text: "結局一番うまいと思っている「安価な市販のお菓子」" },
-        { id: "Q.23", text: "ラーメン屋でスープを一口飲んだ瞬間の心の中のリアクション" },
-        { id: "Q.24", text: "どんなにお腹がいっぱいでも入る「別腹」なもの" },
-        { id: "Q.25", text: "ファミレスに入ったら絶対に頼んでしまうメニュー" },
-        { id: "Q.26", text: "テンションがブチ上がる自作の超ピンポイントレシピ" },
-        { id: "Q.27", text: "実は苦手だけど大人ぶって食べられるフリをしている食べ物" },
-        { id: "Q.28", text: "カレーに絶対に入れたい自分だけの隠し味" },
-        { id: "Q.29", text: "「これさえあれば白米が無限にいける」と思う最高のお供" },
-        { id: "Q.30", text: "深夜2時に食べると最高に背徳感があるもの" },
-      ],
-    },
-    {
-      title: "時間・隙間・行動パターン",
-      icon: "⏳",
-      questions: [
-        { id: "Q.31", text: "5分の待ち時間が発生したときに真っ先にやること" },
-        { id: "Q.32", text: "休日を完璧に無駄にした日の言い訳" },
-        { id: "Q.33", text: "予定が突然キャンセルされた瞬間の本心" },
-        { id: "Q.34", text: "布団に入ってから寝落ちするまでの平均思考ルーティン" },
-        { id: "Q.35", text: "待ち合わせ場所に30分早く着いたときの時間の潰し方" },
-        { id: "Q.36", text: "休日の午前中を最高にするために必要な1つの行動" },
-        { id: "Q.37", text: "急に思い立って深夜に始めてしまう部屋の模様替え・作業" },
-        { id: "Q.38", text: "雨の日に家から一歩も出ないでやること" },
-        { id: "Q.39", text: "電車の乗り換えで絶対に座りたいときの視線と立ち位置" },
-        { id: "Q.40", text: "朝起きてから最初に発する言葉または声" },
-      ],
-    },
-    {
-      title: "失敗・反省・やってはいけない禁忌",
-      icon: "💥",
-      questions: [
-        { id: "Q.41", text: "深酒したときに「絶対にやってはいけない」マイルール" },
-        { id: "Q.42", text: "テンションが上がっている時にやりがちな痛い行動" },
-        { id: "Q.43", text: "ネットショッピングで酔った勢いで買って後悔したもの" },
-        { id: "Q.44", text: "人に言われて地味にショックだった「自分の癖」" },
-        { id: "Q.45", text: "怒られた時に脳内で流れている現実逃避の映像" },
-        { id: "Q.46", text: "緊張すると出てしまう体調や行動の変異" },
-        { id: "Q.47", text: "アラームを止めた後の「あと5分」で見る夢" },
-        { id: "Q.48", text: "人の前でやらかした人生最大の「言い間違い」" },
-        { id: "Q.49", text: "SNSで投稿ボタンを押す直前に怖くなって消した文章の傾向" },
-        { id: "Q.50", text: "後から振り返ると黒歴史な昔のマイブーム" },
-      ],
-    },
-    {
-      title: "買い物・モノ・積み偏愛",
-      icon: "📦",
-      questions: [
-        { id: "Q.51", text: "読みたくて買ったのに本棚で寝かしている本" },
-        { id: "Q.52", text: "インストールしたものの1回も開いていないアプリ" },
-        { id: "Q.53", text: "衝動買いしたけれど一度も外に着ていっていない服" },
-        { id: "Q.54", text: "カバンの中に常に入っていないと不安になるもの" },
-        { id: "Q.55", text: "なぜか定期的に買ってしまう同じようなデザインのアイテム" },
-        { id: "Q.56", text: "部屋の中で一番愛着がある「一見ゴミに見えるもの」" },
-        { id: "Q.57", text: "パッケージ買い（パケ買い）して大成功したアイテム" },
-        { id: "Q.58", text: "値段の割にQOL（生活の質）が爆上がりした最高の買い物" },
-        { id: "Q.59", text: "いつか絶対に使いたいと思って大切に保管している箱や紙袋" },
-        { id: "Q.60", text: "「これは自分しか買ってないだろ」と思うニッチな愛用品" },
-      ],
-    },
-    {
-      title: "人間関係・距離感",
-      icon: "🤝",
-      questions: [
-        { id: "Q.61", text: "人と接するときに密かに観察しているフェチポイント" },
-        { id: "Q.62", text: "「この人とは気が合うな」と確信する瞬間" },
-        { id: "Q.63", text: "逆に「あ、ちょっと苦手かも」と察する相手の小さな行動" },
-        { id: "Q.64", text: "LINEの返信をあえて数時間遅らせるときの理由" },
-        { id: "Q.65", text: "大人数での飲み会で真っ先に座るポジション" },
-        { id: "Q.66", text: "人から褒められたときに一番嬉しい言葉" },
-        { id: "Q.67", text: "初対面の人に自己紹介するとき、あえて言わないでおくこと" },
-        { id: "Q.68", text: "「自分って実は性格悪いな」と自覚する瞬間" },
-        { id: "Q.69", text: "友達に「これ知ってる？」と教えたくなるマニアックな雑学" },
-        { id: "Q.70", text: "人にされて一番テンションが下がること" },
-      ],
-    },
-    {
-      title: "五感・フェチズム",
-      icon: "✨",
-      questions: [
-        { id: "Q.71", text: "理由は言えないけれど「大好きな匂い・香り」" },
-        { id: "Q.72", text: "聴くと鳥肌が立つ「大好物な音（ASMR的なもの）」" },
-        { id: "Q.73", text: "触っているだけで心が落ち着く素材・触感" },
-        { id: "Q.74", text: "街中で見かけるとつい視線で追ってしまうもの" },
-        { id: "Q.75", text: "季節の変わり目に感じる「あの独特な空気」の正体" },
-        { id: "Q.76", text: "なぜか心が落ち着く「特定の場所・空間」" },
-        { id: "Q.77", text: "自分の部屋の中で最も視界に入ると落ち着くアングル" },
-        { id: "Q.78", text: "色の中で無意識に選んでしまう「偏愛カラー」" },
-        { id: "Q.79", text: "見ているだけでテンションが上がる幾何学模様や建築" },
-        { id: "Q.80", text: "理由もなく好きな「特定の文字の形・フォント」" },
-      ],
-    },
-    {
-      title: "マニアックなこだわり・マイブーム",
-      icon: "🔥",
-      questions: [
-        { id: "Q.81", text: "今、一番時間を忘れて没頭できるマイブーム" },
-        { id: "Q.82", text: "周りには一切共感されない「自分だけのフェチ」" },
-        { id: "Q.83", text: "どんなに疲れていてもこれだけは欠かさない日課" },
-        { id: "Q.84", text: "ゲームでキャラメイクするときに絶対入れるこだわり" },
-        { id: "Q.85", text: "スマホのホーム画面の並び順に関する譲れないルール" },
-        { id: "Q.86", text: "自分だけが知っている地元の「秘密のスポット」" },
-        { id: "Q.87", text: "「これの専門家になれるかも」と思うくらい詳しい分野" },
-        { id: "Q.88", text: "映画やドラマで一番感情移入してしまうキャラクターのタイプ" },
-        { id: "Q.89", text: "今一番会って語り合いたい歴史上の人物または架空のキャラ" },
-        { id: "Q.90", text: "死ぬまでに一度は挑戦してみたい奇抜な体験" },
-      ],
-    },
-    {
-      title: "偏愛・ワタシの構成要素",
-      icon: "🧩",
-      questions: [
-        { id: "Q.91", text: "自分の人生に一番影響を与えた「一冊の作品」" },
-        { id: "Q.92", text: "聴くだけで特定の時代にタイムスリップできる思い出の曲" },
-        { id: "Q.93", text: "自分の精神年齢は何歳だと思っているか" },
-        { id: "Q.94", text: "自分の「説明書」の一ページ目に書くべき注意事項" },
-        { id: "Q.95", text: "自分の性格を動物に例えるなら" },
-        { id: "Q.96", text: "自分の「取扱説明書」に載っている「長持ちさせるコツ」" },
-        { id: "Q.97", text: "自分の弱点を克服するために試した珍しい方法" },
-        { id: "Q.98", text: "自分の長所をひとつだけ自慢するなら" },
-        { id: "Q.99", text: "これから新しく「偏愛」したい探求中のテーマ" },
-        { id: "Q.100", text: "一言で表すなら「ワタシをかたちづくるもの」とは？" },
-      ],
-    },
-  ];
+  const [selectedCategory, setSelectedCategory] = useState("存在と自己");
+  const [answers, setAnswers] = useState({});
+
+  // カテゴリ一覧を取得
+  const categories = Array.from(new Set(questions.map((q) => q.category)));
+
+  // 選択中のカテゴリの質問一覧
+  const currentQuestions = questions.filter((q) => q.category === selectedCategory);
+
+  // 回答の入力ハンドラー
+  const handleAnswerChange = (id, value) => {
+    setAnswers((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // 全体回答数のカウント
+  const answeredCount = Object.values(answers).filter((a) => a && a.trim() !== "").length;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800">
-      <main className="max-w-md mx-auto px-4 py-6 pb-24">
-        {/* バナー */}
-        <div className="w-full mb-3 overflow-hidden rounded-2xl shadow-sm">
-          <Image
-            src="/katati.png"
-            alt="バナー"
-            width={400}
-            height={200}
-            className="w-full h-auto object-cover"
-            priority
-          />
-        </div>
-
-        {/* サブタイトル */}
-        <p className="text-[11px] text-slate-400 mb-6 text-center tracking-widest font-medium">
-          100の偏愛＆クセつよ質問リスト
+    <div className="min-h-screen bg-[#F7F4EF] text-[#1C1917] p-6 md:p-12 font-serif">
+      {/* ヘッダー */}
+      <header className="max-w-6xl mx-auto mb-10 text-center border-b border-[#D6CEB8] pb-6">
+        <h1 className="text-3xl md:text-4xl font-light tracking-widest text-[#1C1917] mb-3">
+          高尚ナル偏愛マニアの100の問い
+        </h1>
+        <p className="text-sm text-[#78716C] tracking-wide">
+          自らの美学・存在・思考の深淵と静かに向き合う対話録
         </p>
+        <div className="mt-4 inline-block bg-[#E7E2D6] px-4 py-1 rounded-full text-xs text-[#57534E]">
+          回答進捗: <span className="font-bold text-[#1C1917]">{answeredCount}</span> / 100
+        </div>
+      </header>
 
-        {/* 質問セクション一覧 */}
-        {sections.map((sec, idx) => (
-          <section key={idx} className="mb-8">
-            <div className="flex items-center gap-1.5 mb-3 border-b border-slate-200 pb-1.5">
-              <span className="text-xs">{sec.icon}</span>
-              <h2 className="text-[11px] font-bold text-slate-500 tracking-wider uppercase">
-                {sec.title}
-              </h2>
-            </div>
+      {/* 2カラム・メインコンテンツ */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
+        
+        {/* 左カラム：目次・カテゴリナビゲーション */}
+        <aside className="md:col-span-4 bg-[#EFECE6] p-6 rounded-lg border border-[#E2DCCE] h-fit sticky top-6">
+          <h2 className="text-xs uppercase tracking-widest text-[#78716C] mb-4 border-b border-[#D6CEB8] pb-2">
+            CHAPTERS / 章目次
+          </h2>
+          <nav className="space-y-2">
+            {categories.map((cat, idx) => {
+              const catQuestions = questions.filter((q) => q.category === cat);
+              const catAnswered = catQuestions.filter((q) => answers[q.id]?.trim()).length;
 
-            <div className="space-y-2.5">
-              {sec.questions.map((q) => (
-                <div
-                  key={q.id}
-                  className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm"
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`w-full text-left px-3 py-2.5 rounded text-sm transition-all duration-200 flex justify-between items-center ${
+                    selectedCategory === cat
+                      ? "bg-[#1C1917] text-[#F7F4EF] shadow-sm font-medium"
+                      : "hover:bg-[#E7E2D6] text-[#44403C]"
+                  }`}
                 >
-                  <div className="flex items-center gap-2 text-xs mb-2">
-                    <span className="font-bold text-slate-400 shrink-0">{q.id}</span>
-                    <p className="font-medium text-slate-700 truncate">{q.text}</p>
-                  </div>
-                  <input
-                    type="text"
-                    className="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-400 text-slate-700"
-                  />
-                </div>
-              ))}
-            </div>
-          </section>
-        ))}
-      </main>
+                  <span>{idx + 1}. {cat}</span>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    selectedCategory === cat ? "bg-[#332E2B] text-[#D6CEB8]" : "bg-[#E2DCCE] text-[#78716C]"
+                  }`}>
+                    {catAnswered}/{catQuestions.length}
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
+        </aside>
+
+        {/* 右カラム：質問＆入力フォーム */}
+        <main className="md:col-span-8 space-y-8">
+          <div className="border-b border-[#D6CEB8] pb-3 mb-6">
+            <h2 className="text-xl font-medium tracking-wider text-[#1C1917]">
+              {selectedCategory}
+            </h2>
+          </div>
+
+          {currentQuestions.map((q) => (
+            <article key={q.id} className="bg-[#FFFFFF] p-6 rounded-lg border border-[#E2DCCE] shadow-sm hover:border-[#B45309] transition-all">
+              <div className="flex items-baseline space-x-3 mb-2">
+                <span className="text-xs font-serif italic text-[#B45309] font-bold">
+                  Q.{q.id}
+                </span>
+                <h3 className="text-base font-medium text-[#1C1917] leading-relaxed">
+                  {q.question}
+                </h3>
+              </div>
+              
+              {/* ヒントカラム */}
+              <p className="text-xs text-[#78716C] mb-4 italic pl-7">
+                {q.hint}
+              </p>
+
+              {/* 回答入力エリア */}
+              <textarea
+                value={answers[q.id] || ""}
+                onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                placeholder={q.placeholder}
+                rows={3}
+                className="w-full p-3 bg-[#FAF8F5] border border-[#E2DCCE] rounded text-sm text-[#1C1917] placeholder-[#A8A29E] focus:outline-none focus:border-[#B45309] focus:bg-[#FFFFFF] transition-all"
+              />
+            </article>
+          ))}
+        </main>
+      </div>
     </div>
   );
 }
