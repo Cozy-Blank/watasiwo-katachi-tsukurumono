@@ -8,6 +8,6 @@
 }
 
 body {
-  min-h-screen;
+  min-height: 100vh; /* ⭕ 標準のCSS記法にするか、 @apply min-h-screen; に直すよ！ */
   overflow-y: auto; /* 縦スクロールを許可する */
 }
