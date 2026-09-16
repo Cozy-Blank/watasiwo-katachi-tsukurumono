@@ -8,7 +8,6 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  min-h-screen;
+  overflow-y: auto; /* 縦スクロールを許可する */
 }
