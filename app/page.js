@@ -1,247 +1,54 @@
-'use client';
-
-import { useState } from 'react';
+import Image from "next/image";
 
 export default function Home() {
-  const categories = [
-    {
-      title: "🌙 日常の行い・ひそかな癖",
-      color: "bg-[#FFFBF5] border-[#E8DFD8] text-[#5C4A3E]",
-      badge: "bg-[#E08E79]",
-      inputBorder: "focus:ring-[#E08E79] border-[#E8DFD8]",
-      questions: [
-        "疲れた夜に無心で観てしまう動画のジャンル",
-        "なぜか捨てられずに放置している謎のガジェット・小物",
-        "家に一人でいるときだけやっている無意味な動作",
-        "コンビニに入ると用もないのに必ずチェックしてしまうコーナー",
-        "集中したい時に無意識に聴いているマニアックなBGM",
-        "風呂場でつい考えてしまうくだらない議論",
-        "人には理解されない自分だけの快感・マニアックな瞬間",
-        "爪を伸ばす・切るタイミングの自分ルール",
-        "スマホの検索履歴の最新3つ（恥ずかしいやつ）",
-        "洗濯物をたたむときに譲れないマイルール"
-      ]
-    },
-    {
-      title: "💭 思考・妄想・脳内再生",
-      color: "bg-[#F9F6F0] border-[#E2DAD0] text-[#4A4238]",
-      badge: "bg-[#9B829C]",
-      inputBorder: "focus:ring-[#9B829C] border-[#E2DAD0]",
-      questions: [
-        "もし明日地球が終わるなら最後に食べる「B級グルメ」",
-        "脳内で100万回再生された過去の恥ずかしいフラッシュバック",
-        "宝くじで10億円当たったら最初に買う「誰も得しないもの」",
-        "妄想の中で自分が無双しているシチュエーション",
-        "死ぬまでに一度は言ってみたい格好つけたセリフ",
-        "実は密かに憧れている「フィクションの職業」",
-        "自分だけの世界観に浸れる最高の「妄想BGM」",
-        "自分が映画の主人公だったら流れてほしいエンディング曲",
-        "理由はないけれど、昔からなぜか惹かれる言葉・単語",
-        "生まれ変わったらなってみたい「人間以外のもの」"
-      ]
-    },
-    {
-      title: "🍕 食・味覚の偏愛",
-      color: "bg-[#FFF9F5] border-[#EADED6] text-[#5A4538]",
-      badge: "bg-[#D97757]",
-      inputBorder: "focus:ring-[#D97757] border-[#EADED6]",
-      questions: [
-        "他人には見せられない「ズボラ飯・奇妙な食べ合わせ」",
-        "結局一番うまいと思っている「安価な市販のお菓子」",
-        "ラーメン屋でスープを一口飲んだ瞬間の心の中のリアクション",
-        "どんなにお腹がいっぱいでも入る「別腹」なもの",
-        "ファミレスに入ったら絶対に頼んでしまうメニュー",
-        "テンションがブチ上がる自作の超ピンポイントレシピ",
-        "実は苦手だけど大人ぶって食べられるフリをしている食べ物",
-        "カレーに絶対に入れたい自分だけの隠し味",
-        "「これさえあれば白米が無限にいける」と思う最高のお供",
-        "深夜2時に食べると最高に背徳感があるもの"
-      ]
-    },
-    {
-      title: "⏱️ 時間・隙間・行動パターン",
-      color: "bg-[#F4F7F4] border-[#D6E0D6] text-[#3D4A3D]",
-      badge: "bg-[#87A96B]",
-      inputBorder: "focus:ring-[#87A96B] border-[#D6E0D6]",
-      questions: [
-        "5分の待ち時間が発生したときに真っ先にやること",
-        "休日を完璧に無駄にした日の言い訳",
-        "予定が突然キャンセルされた瞬間の本心",
-        "布団に入ってから寝落ちするまでの平均思考ルーティン",
-        "待ち合わせ場所に30分早く着いたときの時間の潰し方",
-        "休日の午前中を最高にするために必要な1つの行動",
-        "急に思い立って深夜に始めてしまう部屋の模様替え・作業",
-        "雨の日に家から一歩も出ないでやること",
-        "電車の乗り換えで絶対に座りたいときの視線と立ち位置",
-        "朝起きてから最初に発する言葉または声"
-      ]
-    },
-    {
-      title: "⚠️ 失敗・反省・やってはいけない禁忌",
-      color: "bg-[#FFFAF0] border-[#EBE3D0] text-[#574C38]",
-      badge: "bg-[#D8A452]",
-      inputBorder: "focus:ring-[#D8A452] border-[#EBE3D0]",
-      questions: [
-        "深酒したときに「絶対にやってはいけない」マイルール",
-        "テンションが上がっている時にやりがちな痛い行動",
-        "ネットショッピングで酔った勢いで買って後悔したもの",
-        "人に言われて地味にショックだった「自分の癖」",
-        "怒られた時に脳内で流れている現実逃避の映像",
-        "緊張すると出てしまう体調や行動の変異",
-        "アラームを止めた後の「あと5分」で見る夢",
-        "人の前でやらかした人生最大の「言い間違い」",
-        "SNSで投稿ボタンを押す直前に怖くなって消した文章の傾向",
-        "後から振り返ると黒歴史な昔のマイブーム"
-      ]
-    },
-    {
-      title: "📦 買い物・モノ・積み偏愛",
-      color: "bg-[#F8F6F0] border-[#E4DDD0] text-[#4F4638]",
-      badge: "bg-[#B38B6D]",
-      inputBorder: "focus:ring-[#B38B6D] border-[#E4DDD0]",
-      questions: [
-        "読みたくて買ったのに本棚で寝かしている本",
-        "インストールしたものの1回も開いていないアプリ",
-        "衝動買いしたけれど一度も外に着ていっていない服",
-        "カバンの中に常に入っていないと不安になるもの",
-        "なぜか定期的に買ってしまう同じようなデザインのアイテム",
-        "部屋の中で一番愛着がある「一見ゴミに見えるもの」",
-        "パッケージ買い（パケ買い）して大成功したアイテム",
-        "値段の割にQOL（生活の質）が爆上がりした最高の買い物",
-        "いつか絶対に使いたいと思って大切に保管している箱や紙袋",
-        "「これは自分しか買ってないだろ」と思うニッチな愛用品"
-      ]
-    },
-    {
-      title: "🤝 人間関係・距離感",
-      color: "bg-[#F6F5F8] border-[#DAD6E0] text-[#433E4A]",
-      badge: "bg-[#7E7895]",
-      inputBorder: "focus:ring-[#7E7895] border-[#DAD6E0]",
-      questions: [
-        "人と接するときに密かに観察しているフェチポイント",
-        "「この人とは気が合うな」と確信する瞬間",
-        "逆に「あ、ちょっと苦手かも」と察する相手の小さな行動",
-        "LINEの返信をあえて数時間遅らせるときの理由",
-        "大人数での飲み会で真っ先に座るポジション",
-        "人から褒められたときに一番嬉しい言葉",
-        "初対面の人に自己紹介するとき、あえて言わないでおくこと",
-        "「自分って実は性格悪いな」と自覚する瞬間",
-        "友達に「これ知ってる？」と教えたくなるマニアックな雑学",
-        "人にされて一番テンションが下がること"
-      ]
-    },
-    {
-      title: "👁️ 五感・フェチズム",
-      color: "bg-[#FCF5F5] border-[#EADAD8] text-[#593E3D]",
-      badge: "bg-[#C87D87]",
-      inputBorder: "focus:ring-[#C87D87] border-[#EADAD8]",
-      questions: [
-        "理由は言えないけれど「大好きな匂い・香り」",
-        "聴くと鳥肌が立つ「大好物な音（ASMR的なもの）」",
-        "触っているだけで心が落ち着く素材・触感",
-        "街中で見かけるとつい視線で追ってしまうもの",
-        "季節の変わり目に感じる「あの独特な空気」の正体",
-        "なぜか心が落ち着く「特定の場所・空間」",
-        "自分の部屋の中で最も視界に入ると落ち着くアングル",
-        "色の中で無意識に選んでしまう「偏愛カラー」",
-        "見ているだけでテンションが上がる幾何学模様や建築",
-        "理由もなく好きな「特定の文字の形・フォント」"
-      ]
-    },
-    {
-      title: "🔥 マニアックなこだわり・マイブーム",
-      color: "bg-[#F2F7F5] border-[#CFDFD9] text-[#3A4A45]",
-      badge: "bg-[#659B87]",
-      inputBorder: "focus:ring-[#659B87] border-[#CFDFD9]",
-      questions: [
-        "今、一番時間を忘れて没頭できるマイブーム",
-        "周りには一切共感されない「自分だけのフェチ」",
-        "どんなに疲れていてもこれだけは欠かさない日課",
-        "ゲームでキャラメイクするときに絶対入れるこだわり",
-        "スマホのホーム画面の並び順に関する譲れないルール",
-        "自分だけが知っている地元の「秘密のスポット」",
-        "「これの専門家になれるかも」と思うくらい詳しい分野",
-        "映画やドラマで一番感情移入してしまうキャラクターのタイプ",
-        "今一番会って語り合いたい歴史上の人物または架空のキャラ",
-        "死ぬまでに一度は挑戦してみたい奇抜な体験"
-      ]
-    },
-    {
-      title: "🧩 偏愛・ワタシの構成要素",
-      color: "bg-[#F7F4F9] border-[#DFD6E5] text-[#46394F]",
-      badge: "bg-[#8E729B]",
-      inputBorder: "focus:ring-[#8E729B] border-[#DFD6E5]",
-      questions: [
-        "自分の人生に一番影響を与えた「一冊の作品」",
-        "聴くだけで特定の時代にタイムスリップできる思い出の曲",
-        "自分の精神年齢は何歳だと思っているか",
-        "自分の「説明書」の一ページ目に書くべき注意事項",
-        "自分の性格を動物に例えるなら",
-        "自分の「取扱説明書」に載っている「長持ちさせるコツ」",
-        "自分の弱点を克服するために試した珍しい方法",
-        "自分の長所をひとつだけ自慢するなら",
-        "これから新しく「偏愛」したい探求中のテーマ",
-        "一言で表すなら「ワタシをかたちづくるもの」とは？"
-      ]
-    }
+  const questions = [
+    { id: "Q.1", text: "疲れた夜に無心で観てしまう動画のジャンル" },
+    { id: "Q.2", text: "なぜか捨てられずに放置している謎のガジェット・小物" },
   ];
 
-  const [answers, setAnswers] = useState({});
-
-  const handleChange = (id, value) => {
-    setAnswers((prev) => ({ ...prev, [id]: value }));
-  };
-
   return (
-    <div style={{ maxWidth: '480px', margin: '0 auto' }} className="min-h-screen bg-[#FDFBF7] pb-20 font-sans">
-      {/* 固定ヘッダー */}
-      <header className="w-full bg-[#FFFDF9]/95 backdrop-blur-md shadow-sm mb-6 sticky top-0 z-20 border-b border-[#EFEADF] px-4 py-3 text-center">
-        <div style={{ maxWidth: '100%', maxHeight: '160px' }} className="w-full overflow-hidden rounded-xl mb-2 bg-[#F7F3EC] flex items-center justify-center border border-[#EBE5DA] mx-auto">
-          <img
-            src="/katati.png"
-            alt="バナー画像"
-            style={{ maxWidth: '100%', maxHeight: '160px', objectFit: 'contain' }}
-            className="w-full h-auto mx-auto block rounded-xl"
-          />
-        </div>
-        <h1 className="text-xl font-extrabold text-[#4A3E3D] tracking-tight">わたしをかたちづくるもの</h1>
-        <p className="text-xs font-bold text-[#8C7A77] mt-1">100の偏愛＆クセつよ質問リスト</p>
-      </header>
+    <main className="min-h-screen bg-slate-50 px-4 py-6 max-w-md mx-auto">
+      {/* スマホ画面幅に合わせたバナー */}
+      <div className="w-full mb-4 overflow-hidden rounded-2xl shadow-sm">
+        <Image
+          src="/katati.png"
+          alt="バナー"
+          width={400}
+          height={200}
+          className="w-full h-auto object-cover"
+          priority
+        />
+      </div>
 
-      {/* 質問リストエリア */}
-      <main className="w-full px-3 space-y-6">
-        {categories.map((category, catIdx) => (
-          <section key={catIdx} className="bg-white rounded-2xl p-4 shadow-sm border border-[#E8DFD5]">
-            <h2 className="text-sm font-extrabold text-[#4A3E3D] mb-3 flex items-center gap-2 border-b border-[#F2EDE4] pb-2">
-              <span className={`w-3 h-3 rounded-full ${category.badge}`}></span>
-              {category.title}
-            </h2>
-            <div className="space-y-3">
-              {category.questions.map((q, qIdx) => {
-                const qNum = catIdx * 10 + qIdx + 1;
-                const qId = `q_${qNum}`;
-                return (
-                  <div key={qIdx} className={`p-3 rounded-xl border ${category.color}`}>
-                    <div className="flex items-start gap-2 mb-2">
-                      <span className={`text-[11px] font-extrabold text-white px-2 py-0.5 rounded-md ${category.badge} shrink-0 mt-0.5 shadow-sm`}>
-                        Q.{qNum}
-                      </span>
-                      <p className="text-xs font-bold leading-relaxed">{q}</p>
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="直感で回答を入力..."
-                      value={answers[qId] || ''}
-                      onChange={(e) => handleChange(qId, e.target.value)}
-                      className={`w-full text-xs px-3 py-2 rounded-lg bg-white/90 border ${category.inputBorder} focus:outline-none focus:ring-2 transition-all text-[#3D3332] shadow-sm placeholder:text-[#A89C9A]`}
-                    />
-                  </div>
-                );
-              })}
+      <p className="text-[11px] text-slate-400 mb-6 text-center tracking-widest">
+        100の偏愛＆クセつよ質問リスト
+      </p>
+
+      {/* 小さく洗練されたジャンル見出し */}
+      <section className="mb-6">
+        <div className="flex items-center gap-1.5 mb-3 border-b border-slate-200 pb-2">
+          <span className="text-sm">🌙</span>
+          <h2 className="text-xs font-bold text-slate-500 tracking-wider">
+            日常の行い・ひそかな癖
+          </h2>
+        </div>
+
+        {/* 質問リスト（Q1横並び・1行サイズ・入力欄プレースホルダーなし） */}
+        <div className="space-y-3">
+          {questions.map((q) => (
+            <div key={q.id} className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+              <div className="flex items-center gap-2 text-xs text-slate-700 mb-2">
+                <span className="font-semibold text-slate-400 shrink-0">{q.id}</span>
+                <p className="truncate font-medium">{q.text}</p>
+              </div>
+              <input
+                type="text"
+                className="w-full text-xs px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-slate-400"
+              />
             </div>
-          </section>
-        ))}
-      </main>
-    </div>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
