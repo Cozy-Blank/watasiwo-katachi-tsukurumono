@@ -1,111 +1,129 @@
 "use client";
+
 import { useState } from "react";
-import { questions } from '../data/questions';
+import { questions } from "../data/questions";
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("存在と自己");
+  const [selectedCategory, setSelectedCategory] = useState("すべて");
   const [answers, setAnswers] = useState({});
 
-  // カテゴリ一覧を取得
-  const categories = Array.from(new Set(questions.map((q) => q.category)));
+  // カテゴリ（章）一覧の取得
+  const categories = ["すべて", ...Array.from(new Set(questions.map((q) => q.category)))];
 
-  // 選択中のカテゴリの質問一覧
-  const currentQuestions = questions.filter((q) => q.category === selectedCategory);
+  // 選択中のカテゴリで質問を絞り込み
+  const filteredQuestions = selectedCategory === "すべて"
+    ? questions
+    : questions.filter((q) => q.category === selectedCategory);
 
-  // 回答の入力ハンドラー
-  const handleAnswerChange = (id, value) => {
-    setAnswers((prev) => ({ ...prev, [id]: value }));
+  // 回答テキストの入力更新
+  const handleAnswerChange = (id, text) => {
+    setAnswers((prev) => ({ ...prev, [id]: text }));
   };
 
-  // 全体回答数のカウント
-  const answeredCount = Object.values(answers).filter((a) => a && a.trim() !== "").length;
+  // 回答済みの総数をカウント
+  const answeredCount = Object.values(answers).filter((a) => a.trim() !== "").length;
 
   return (
-    <div className="min-h-screen bg-[#F7F4EF] text-[#1C1917] p-6 md:p-12 font-serif">
-      {/* ヘッダー */}
-      <header className="max-w-6xl mx-auto mb-10 text-center border-b border-[#D6CEB8] pb-6">
-        <h1 className="text-3xl md:text-4xl font-light tracking-widest text-[#1C1917] mb-3">
-          高尚ナル偏愛マニアの100の問い
-        </h1>
-        <p className="text-sm text-[#78716C] tracking-wide">
-          自らの美学・存在・思考の深淵と静かに向き合う対話録
-        </p>
-        <div className="mt-4 inline-block bg-[#E7E2D6] px-4 py-1 rounded-full text-xs text-[#57534E]">
-          回答進捗: <span className="font-bold text-[#1C1917]">{answeredCount}</span> / 100
-        </div>
-      </header>
-
-      {/* 2カラム・メインコンテンツ */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
-        
-        {/* 左カラム：目次・カテゴリナビゲーション */}
-        <aside className="md:col-span-4 bg-[#EFECE6] p-6 rounded-lg border border-[#E2DCCE] h-fit sticky top-6">
-          <h2 className="text-xs uppercase tracking-widest text-[#78716C] mb-4 border-b border-[#D6CEB8] pb-2">
-            CHAPTERS / 章目次
-          </h2>
-          <nav className="space-y-2">
-            {categories.map((cat, idx) => {
-              const catQuestions = questions.filter((q) => q.category === cat);
-              const catAnswered = catQuestions.filter((q) => answers[q.id]?.trim()).length;
-
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`w-full text-left px-3 py-2.5 rounded text-sm transition-all duration-200 flex justify-between items-center ${
-                    selectedCategory === cat
-                      ? "bg-[#1C1917] text-[#F7F4EF] shadow-sm font-medium"
-                      : "hover:bg-[#E7E2D6] text-[#44403C]"
-                  }`}
-                >
-                  <span>{idx + 1}. {cat}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${
-                    selectedCategory === cat ? "bg-[#332E2B] text-[#D6CEB8]" : "bg-[#E2DCCE] text-[#78716C]"
-                  }`}>
-                    {catAnswered}/{catQuestions.length}
-                  </span>
-                </button>
-              );
-            })}
-          </nav>
-        </aside>
-
-        {/* 右カラム：質問＆入力フォーム */}
-        <main className="md:col-span-8 space-y-8">
-          <div className="border-b border-[#D6CEB8] pb-3 mb-6">
-            <h2 className="text-xl font-medium tracking-wider text-[#1C1917]">
-              {selectedCategory}
-            </h2>
-          </div>
-
-          {currentQuestions.map((q) => (
-            <article key={q.id} className="bg-[#FFFFFF] p-6 rounded-lg border border-[#E2DCCE] shadow-sm hover:border-[#B45309] transition-all">
-              <div className="flex items-baseline space-x-3 mb-2">
-                <span className="text-xs font-serif italic text-[#B45309] font-bold">
-                  Q.{q.id}
-                </span>
-                <h3 className="text-base font-medium text-[#1C1917] leading-relaxed">
-                  {q.question}
-                </h3>
-              </div>
-              
-              {/* ヒントカラム */}
-              <p className="text-xs text-[#78716C] mb-4 italic pl-7">
-                {q.hint}
-              </p>
-
-              {/* 回答入力エリア */}
-              <textarea
-                value={answers[q.id] || ""}
-                onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                placeholder={q.placeholder}
-                rows={3}
-                className="w-full p-3 bg-[#FAF8F5] border border-[#E2DCCE] rounded text-sm text-[#1C1917] placeholder-[#A8A29E] focus:outline-none focus:border-[#B45309] focus:bg-[#FFFFFF] transition-all"
-              />
-            </article>
-          ))}
-        </main>
+    <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontFamily: "sans-serif", color: "#0f172a" }}>
+      {/* スマホ対応バナー画像 */}
+      <div style={{ width: "100%", maxWidth: "600px", margin: "0 auto 24px auto" }}>
+        <img
+          src="/katati.png"
+          alt="カタチツクルモノ バナー"
+          style={{ width: "100%", height: "auto", borderRadius: "12px", display: "block" }}
+        />
       </div>
-    </div>
+
+      <h1 style={{ fontSize: "26px", fontWeight: "bold", marginBottom: "8px" }}>高尚ナル偏愛マニアの100の問い</h1>
+      <p style={{ color: "#64748b", marginBottom: "20px" }}>自らの美学・存在・思考の深淵と静かに向き合う対話録</p>
+      
+      {/* 進捗バー */}
+      <div style={{ padding: "12px 16px", backgroundColor: "#f1f5f9", borderRadius: "8px", marginBottom: "32px", fontSize: "14px", fontWeight: "bold" }}>
+        回答進捗: {answeredCount} / {questions.length}
+      </div>
+
+      {/* CHAPTERS / 章目次 */}
+      <section style={{ marginBottom: "32px" }}>
+        <h2 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "12px" }}>CHAPTERS / 章目次</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {categories.map((cat) => {
+            const countInCategory = cat === "すべて"
+              ? questions.length
+              : questions.filter(q => q.category === cat).length;
+            const answeredInCategory = cat === "すべて"
+              ? answeredCount
+              : questions.filter(q => q.category === cat && answers[q.id]?.trim()).length;
+
+            const isActive = selectedCategory === cat;
+
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                style={{
+                  padding: "8px 12px",
+                  borderRadius: "6px",
+                  border: isActive ? "1px solid #0f172a" : "1px solid #cbd5e1",
+                  backgroundColor: isActive ? "#0f172a" : "#ffffff",
+                  color: isActive ? "#ffffff" : "#334155",
+                  cursor: "pointer",
+                  fontSize: "13px",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                {cat} {answeredInCategory}/{countInCategory}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 質問カードリスト */}
+      <section style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+        {filteredQuestions.map((q) => (
+          <div
+            key={q.id}
+            style={{
+              padding: "20px",
+              borderRadius: "10px",
+              border: "1px solid #e2e8f0",
+              backgroundColor: "#ffffff",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
+            }}
+          >
+            <div style={{ fontSize: "12px", color: "#64748b", marginBottom: "4px" }}>
+              {q.category}
+            </div>
+            <div style={{ fontSize: "14px", fontWeight: "bold", color: "#475569", marginBottom: "6px" }}>
+              Q.{q.id}
+            </div>
+            <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px", lineHeight: "1.4" }}>
+              {q.question}
+            </h3>
+            {q.description && (
+              <p style={{ fontSize: "14px", color: "#475569", marginBottom: "14px", lineHeight: "1.5" }}>
+                {q.description}
+              </p>
+            )}
+            <textarea
+              value={answers[q.id] || ""}
+              onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+              placeholder={q.placeholder || "思考を書き留める..."}
+              rows={3}
+              style={{
+                width: "100%",
+                padding: "10px",
+                borderRadius: "6px",
+                border: "1px solid #cbd5e1",
+                fontSize: "14px",
+                fontFamily: "inherit",
+                resize: "vertical",
+                boxSizing: "border-box"
+              }}
+            />
+          </div>
+        ))}
+      </section>
+    </main>
   );
 }
