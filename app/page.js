@@ -27,7 +27,7 @@ export default function Home() {
     <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontFamily: "sans-serif", color: "#0f172a" }}>
       {/* スマホ対応バナー画像 */}
  <div style={{ width: "100%", maxWidth: "600px", margin: "0 auto 24px auto" }}>
-  <img src="/katati.webp" alt="watasiwo かたちづくるもの 偏愛Tool バナー" style={{ width: "100%", height: "auto" }} />
+  <img src="/katati.webp" alt="トップバナー" style={{ width: "100%", height: "auto" }} />
 </div>
 
       <h1 style={{ fontSize: "26px", fontWeight: "bold", marginBottom: "8px" }}>高尚ナル偏愛マニアの100の問い</h1>
