@@ -2,18 +2,22 @@
 
 import { useState, useEffect } from 'react';
 
-// @ts-ignore
-import questionsData from '../data/questions';
-
 export default function Home() {
-  const questionsList: any[] = Array.isArray(questionsData)
-    ? questionsData
-    : (questionsData as any)?.questions || (questionsData as any)?.default || [];
-
+  const [questionsList, setQuestionsList] = useState<any[]>([]);
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
   const [selectedCategory, setSelectedCategory] = useState<string>('すべて');
 
   useEffect(() => {
+    // Vercelビルド時のエラーを防ぐため、ブラウザ実行時に安全にデータを読み込みます
+    try {
+      // @ts-ignore
+      const data = require('../data/questions');
+      const list = Array.isArray(data) ? data : data?.default || data?.questions || [];
+      setQuestionsList(list);
+    } catch (e) {
+      console.error('質問データの読み込みに失敗しました', e);
+    }
+
     const saved = localStorage.getItem('dialogue_answers');
     if (saved) {
       try {
