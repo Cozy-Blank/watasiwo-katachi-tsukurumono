@@ -70,7 +70,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F8F9FA] text-[#1E293B] py-12 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[bg-red-100] text-[#1E293B] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         
         {/* トップのイラストバナー */}
