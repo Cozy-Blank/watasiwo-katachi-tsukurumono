@@ -30,10 +30,11 @@ export default function Home() {
   <img src="/katati.webp" alt="トップバナー" style={{ width: "100%", height: "auto" }} />
 </div>
 
-      <h1 style={{ fontSize: "26px", fontWeight: "bold", marginBottom: "8px" }}>偏愛フェチに贈る 100のディープな質問</h1>
-      <p style={{ color: "#64748b", marginBottom: "20px" }}>自らの美学・存在・思考の深淵と静かに向き合う対話録</p>
+     
       
-      {/* 進捗バー */}
+      {/* 進捗バー */}<h1 style={{ fontSize: "22px", fontWeight: "bold", color: "#000000", marginBottom: "20px", textAlign: "center" }}>
+  自らの美学・存在・思考の深淵と静かに向き合う対話録
+</h1>
       <div style={{ padding: "12px 16px", backgroundColor: "#f1f5f9", borderRadius: "8px", marginBottom: "32px", fontSize: "14px", fontWeight: "bold" }}>
         回答進捗: {answeredCount} / {questions.length}
       </div>
