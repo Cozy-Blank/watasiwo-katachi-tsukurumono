@@ -83,7 +83,7 @@ export default function Home() {
         </div>
 
         <header className="text-center mb-10">
-          {/* タイトル：くすみグレー＆控えめサイズに確実指定 */}
+          {/* タイトル：くすみグレー＆控えめサイズ */}
           <h1 
             style={{ color: '#64748B', fontSize: '15px', fontWeight: '500' }} 
             className="mb-2 tracking-wide"
@@ -125,15 +125,12 @@ export default function Home() {
         <div className="space-y-12">
           {questionGroups.map((group, groupIdx) => {
             const firstQ = group[0];
-            const lastQ = group[group.length - 1];
             const groupCategory = firstQ?.category || `ジャンル ${groupIdx + 1}`;
 
             return (
               <section key={groupIdx} className="space-y-6">
+                {/* Q1-Q10などの区切りタグを削除し、カテゴリ名のみ表示 */}
                 <div className="border-b-2 border-black pb-2 pt-2 flex items-center gap-3">
-                  <span className="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">
-                    Q{firstQ?.id} - Q{lastQ?.id}
-                  </span>
                   <h2 className="text-lg font-bold text-[#000000]">
                     {groupCategory}
                   </h2>
@@ -149,18 +146,19 @@ export default function Home() {
                         Q{q.id}. {q.question}
                       </h3>
                       
-                      {/* 思考のヒント：極小フォント（10px）＆ペールグレー */}
+                      {/* 思考のヒント：フォントサイズを10pxの2倍（20px）に変更 */}
                       {q.hint && (
-                        <p style={{ fontSize: '10px', color: '#94A3B8' }} className="mb-3 bg-[#F8F9FA] px-2.5 py-1 rounded border-l-2 border-[#CBD5E1] inline-block leading-tight">
-                          💡 <span>思考のヒント: {q.hint}</span>
+                        <p style={{ fontSize: '20px', color: '#64748B' }} className="mb-4 bg-[#F8F9FA] px-3.5 py-2 rounded border-l-4 border-[#CBD5E1] block leading-relaxed">
+                          💡 <span className="font-medium">思考のヒント: {q.hint}</span>
                         </p>
                       )}
 
+                      {/* 記入欄：幅を問いより気持ち小さめ(w-[95%])、高さは従来の半分(rows={2}) */}
                       <textarea
                         value={answers[q.id] || ''}
                         onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                        rows={4}
-                        className="w-full p-3.5 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all resize-y text-[#1E293B]"
+                        rows={2}
+                        className="w-[95%] mx-auto block p-3 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all resize-y text-[#1E293B]"
                       />
                     </div>
                   ))}
