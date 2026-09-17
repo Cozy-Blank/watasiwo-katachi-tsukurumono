@@ -1,13 +1,22 @@
 @import "tailwindcss";
 
+:root {
+  --bg-color: #2A201C;       /* 全体背景: ほろ苦いココアブラウン */
+  --card-bg: #382B25;        /* カード背景: スモーキーウォルナット */
+  --text-primary: #F5EBE6;   /* メイン文字: シェルピンクホワイト */
+  --text-secondary: #D4C3B7; /* サブ文字: ソフトモカ */
+  --accent-color: #F59E0B;   /* アクセント: ウォームゴールド */
+}
+
 @layer base {
   img {
     max-width: 100%;
     height: auto;
   }
-}
-
-body {
-  min-height: 100vh; /* ⭕ 標準のCSS記法にするか、 @apply min-h-screen; に直すよ！ */
-  overflow-y: auto; /* 縦スクロールを許可する */
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-y: auto;
+  }
 }
