@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --bg-color: #2A201C;       /* 全体背景: ほろ苦いココアブラウン */
-  --card-bg: #382B25;        /* カード背景: スモーキーウォルナット */
-  --text-primary: #F5EBE6;   /* メイン文字: シェルピンクホワイト */
-  --text-secondary: #D4C3B7; /* サブ文字: ソフトモカ */
-  --accent-color: #F59E0B;   /* アクセント: ウォームゴールド */
+  --bg-color: #FAF2F0;
+  --card-bg: #FFFFFF;
+  --text-primary: #3A2321;
+  --text-secondary: #7A5B57;
+  --accent-color: #EEA096;
 }
 
 @layer base {
