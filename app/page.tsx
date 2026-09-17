@@ -70,7 +70,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[bg-red-100] text-[#1E293B] py-12 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[#F8F9FA] text-[#1E293B] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         
         {/* トップのイラストバナー */}
@@ -83,12 +83,15 @@ export default function Home() {
         </div>
 
         <header className="text-center mb-10">
-          {/* タイトル：くすみグレー（#64748B）＆控えめサイズ */}
-          <h1 className="text-base sm:text-lg font-medium text-[#64748B] mb-2 tracking-wide">
+          {/* タイトル：くすみグレー＆控えめサイズに確実指定 */}
+          <h1 
+            style={{ color: '#64748B', fontSize: '15px', fontWeight: '500' }} 
+            className="mb-2 tracking-wide"
+          >
             自らの美学・存在・思考の深淵と静かに向き合う対話録
           </h1>
-          <p className="text-xs text-[#94A3B8]">
-            回答状況: <span className="font-semibold text-[#64748B]">{answeredCount}</span> / {questionsList.length} 問
+          <p style={{ color: '#94A3B8', fontSize: '12px' }}>
+            回答状況: <span style={{ color: '#64748B', fontWeight: '600' }}>{answeredCount}</span> / {questionsList.length} 問
           </p>
         </header>
 
@@ -142,13 +145,13 @@ export default function Home() {
                       key={q.id}
                       className="bg-white p-6 rounded-xl shadow-sm border border-[#E2E8F0] transition-all hover:border-[#CBD5E1]"
                     >
-                      <h3 className="text-sm sm:text-base font-semibold text-[#000000] mb-2 leading-relaxed">
+                      <h3 style={{ fontSize: '15px', color: '#000000', fontWeight: '600' }} className="mb-2 leading-relaxed">
                         Q{q.id}. {q.question}
                       </h3>
                       
-                      {/* 思考のヒント：10pxでさらに小さく控えめに */}
+                      {/* 思考のヒント：極小フォント（10px）＆ペールグレー */}
                       {q.hint && (
-                        <p className="text-[10px] text-[#94A3B8] mb-3 bg-[#F8F9FA] px-2.5 py-1 rounded border-l-2 border-[#CBD5E1] inline-block leading-tight">
+                        <p style={{ fontSize: '10px', color: '#94A3B8' }} className="mb-3 bg-[#F8F9FA] px-2.5 py-1 rounded border-l-2 border-[#CBD5E1] inline-block leading-tight">
                           💡 <span>思考のヒント: {q.hint}</span>
                         </p>
                       )}
