@@ -63,7 +63,6 @@ export default function Home() {
 
   const answeredCount = Object.keys(answers).filter((key) => (answers[Number(key)] || '').trim() !== '').length;
 
-  // 質問を10個ずつの束（グループ）に分割する処理
   const chunkSize = 10;
   const questionGroups = [];
   for (let i = 0; i < filteredQuestions.length; i += chunkSize) {
@@ -72,7 +71,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#F8F9FA] text-[#1E293B] py-12 px-4 sm:px-6 lg:px-8">
-      {/* 全体の最大幅を max-w-4xl に広げて回答欄の横幅にゆとりを持たせました */}
       <div className="max-w-4xl mx-auto">
         
         {/* トップのイラストバナー */}
@@ -85,11 +83,12 @@ export default function Home() {
         </div>
 
         <header className="text-center mb-10">
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#000000] mb-4 tracking-wide">
+          {/* タイトル：くすみグレー（#64748B）＆控えめサイズ */}
+          <h1 className="text-base sm:text-lg font-medium text-[#64748B] mb-2 tracking-wide">
             自らの美学・存在・思考の深淵と静かに向き合う対話録
           </h1>
-          <p className="text-sm text-[#64748B]">
-            回答状況: <span className="font-semibold text-black">{answeredCount}</span> / {questionsList.length} 問
+          <p className="text-xs text-[#94A3B8]">
+            回答状況: <span className="font-semibold text-[#64748B]">{answeredCount}</span> / {questionsList.length} 問
           </p>
         </header>
 
@@ -120,7 +119,6 @@ export default function Home() {
           </button>
         </div>
 
-        {/* 10個ずつの束（ジャンル）でまとめて表示 */}
         <div className="space-y-12">
           {questionGroups.map((group, groupIdx) => {
             const firstQ = group[0];
@@ -129,7 +127,6 @@ export default function Home() {
 
             return (
               <section key={groupIdx} className="space-y-6">
-                {/* 10個の束ごとのジャンル見出し */}
                 <div className="border-b-2 border-black pb-2 pt-2 flex items-center gap-3">
                   <span className="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">
                     Q{firstQ?.id} - Q{lastQ?.id}
@@ -139,26 +136,23 @@ export default function Home() {
                   </h2>
                 </div>
 
-                {/* 各質問カード */}
                 <div className="space-y-6">
                   {group.map((q: any) => (
                     <div
                       key={q.id}
                       className="bg-white p-6 rounded-xl shadow-sm border border-[#E2E8F0] transition-all hover:border-[#CBD5E1]"
                     >
-                      {/* 質問の前にQを表示（フォントサイズは小さめ・控えめ） */}
                       <h3 className="text-sm sm:text-base font-semibold text-[#000000] mb-2 leading-relaxed">
                         Q{q.id}. {q.question}
                       </h3>
                       
-                      {/* 思考のヒント（極小フォントでさりげなく表示） */}
+                      {/* 思考のヒント：10pxでさらに小さく控えめに */}
                       {q.hint && (
-                        <p className="text-[11px] sm:text-xs text-[#64748B] mb-3 bg-[#F8F9FA] px-3 py-1.5 rounded border-l-2 border-[#CBD5E1] inline-block">
-                          💡 <span className="opacity-80">思考のヒント: {q.hint}</span>
+                        <p className="text-[10px] text-[#94A3B8] mb-3 bg-[#F8F9FA] px-2.5 py-1 rounded border-l-2 border-[#CBD5E1] inline-block leading-tight">
+                          💡 <span>思考のヒント: {q.hint}</span>
                         </p>
                       )}
 
-                      {/* 回答欄（幅を広く確保・プレースホルダーなし） */}
                       <textarea
                         value={answers[q.id] || ''}
                         onChange={(e) => handleAnswerChange(q.id, e.target.value)}
