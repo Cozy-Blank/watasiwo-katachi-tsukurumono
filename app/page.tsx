@@ -72,9 +72,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#F8F9FA] text-[#1E293B] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+      {/* 全体の最大幅を max-w-4xl に広げて回答欄の横幅にゆとりを持たせました */}
+      <div className="max-w-4xl mx-auto">
         
-        {/* 復元：トップのイラストバナー */}
+        {/* トップのイラストバナー */}
         <div className="mb-8 overflow-hidden rounded-2xl shadow-sm border border-[#E2E8F0]">
           <img
             src="/katati.webp"
@@ -145,29 +146,24 @@ export default function Home() {
                       key={q.id}
                       className="bg-white p-6 rounded-xl shadow-sm border border-[#E2E8F0] transition-all hover:border-[#CBD5E1]"
                     >
-                      {/* Q番号のみ表示（個別のジャンル名は削除） */}
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-bold tracking-wider text-[#64748B] uppercase">
-                          Q{q.id}
-                        </span>
-                      </div>
-                      
-                      <h3 className="text-base sm:text-lg font-bold text-[#000000] mb-2 leading-relaxed">
-                        {q.question}
+                      {/* 質問の前にQを表示（フォントサイズは小さめ・控えめ） */}
+                      <h3 className="text-sm sm:text-base font-semibold text-[#000000] mb-2 leading-relaxed">
+                        Q{q.id}. {q.question}
                       </h3>
                       
+                      {/* 思考のヒント（極小フォントでさりげなく表示） */}
                       {q.hint && (
-                        <p className="text-xs text-[#64748B] mb-4 bg-[#F8F9FA] p-2.5 rounded-md border-l-2 border-[#CBD5E1]">
-                          💡 思考のヒント: {q.hint}
+                        <p className="text-[11px] sm:text-xs text-[#64748B] mb-3 bg-[#F8F9FA] px-3 py-1.5 rounded border-l-2 border-[#CBD5E1] inline-block">
+                          💡 <span className="opacity-80">思考のヒント: {q.hint}</span>
                         </p>
                       )}
 
-                      {/* 回答欄（プレースホルダー削除済み） */}
+                      {/* 回答欄（幅を広く確保・プレースホルダーなし） */}
                       <textarea
                         value={answers[q.id] || ''}
                         onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                        rows={3}
-                        className="w-full p-3 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all resize-y text-[#1E293B]"
+                        rows={4}
+                        className="w-full p-3.5 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all resize-y text-[#1E293B]"
                       />
                     </div>
                   ))}
