@@ -8,7 +8,6 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>('すべて');
 
   useEffect(() => {
-    // Vercelビルド時のエラーを防ぐため、ブラウザ実行時に安全にデータを読み込みます
     try {
       // @ts-ignore
       const data = require('../data/questions');
@@ -64,10 +63,26 @@ export default function Home() {
 
   const answeredCount = Object.keys(answers).filter((key) => (answers[Number(key)] || '').trim() !== '').length;
 
+  // 質問を10個ずつの束（グループ）に分割する処理
+  const chunkSize = 10;
+  const questionGroups = [];
+  for (let i = 0; i < filteredQuestions.length; i += chunkSize) {
+    questionGroups.push(filteredQuestions.slice(i, i + chunkSize));
+  }
+
   return (
     <main className="min-h-screen bg-[#F8F9FA] text-[#1E293B] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         
+        {/* 復元：トップのイラストバナー */}
+        <div className="mb-8 overflow-hidden rounded-2xl shadow-sm border border-[#E2E8F0]">
+          <img
+            src="/katati.webp"
+            alt="対話録バナー"
+            className="w-full h-auto object-cover max-h-72"
+          />
+        </div>
+
         <header className="text-center mb-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-[#000000] mb-4 tracking-wide">
             自らの美学・存在・思考の深淵と静かに向き合う対話録
@@ -104,37 +119,62 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="space-y-6">
-          {filteredQuestions.map((q: any) => (
-            <div
-              key={q.id}
-              className="bg-white p-6 rounded-xl shadow-sm border border-[#E2E8F0] transition-all hover:border-[#CBD5E1]"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold tracking-wider text-[#64748B] uppercase">
-                  Q{q.id} ・ {q.category}
-                </span>
-              </div>
-              
-              <h2 className="text-base sm:text-lg font-bold text-[#000000] mb-2 leading-relaxed">
-                {q.question}
-              </h2>
-              
-              {q.hint && (
-                <p className="text-xs text-[#64748B] mb-4 bg-[#F8F9FA] p-2.5 rounded-md border-l-2 border-[#CBD5E1]">
-                  💡 思考のヒント: {q.hint}
-                </p>
-              )}
+        {/* 10個ずつの束（ジャンル）でまとめて表示 */}
+        <div className="space-y-12">
+          {questionGroups.map((group, groupIdx) => {
+            const firstQ = group[0];
+            const lastQ = group[group.length - 1];
+            const groupCategory = firstQ?.category || `ジャンル ${groupIdx + 1}`;
 
-              <textarea
-                value={answers[q.id] || ''}
-                onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                placeholder="ここにあなたの思考を書き留めてください..."
-                rows={3}
-                className="w-full p-3 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all resize-y text-[#1E293B] placeholder-[#94A3B8]"
-              />
-            </div>
-          ))}
+            return (
+              <section key={groupIdx} className="space-y-6">
+                {/* 10個の束ごとのジャンル見出し */}
+                <div className="border-b-2 border-black pb-2 pt-2 flex items-center gap-3">
+                  <span className="bg-black text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Q{firstQ?.id} - Q{lastQ?.id}
+                  </span>
+                  <h2 className="text-lg font-bold text-[#000000]">
+                    {groupCategory}
+                  </h2>
+                </div>
+
+                {/* 各質問カード */}
+                <div className="space-y-6">
+                  {group.map((q: any) => (
+                    <div
+                      key={q.id}
+                      className="bg-white p-6 rounded-xl shadow-sm border border-[#E2E8F0] transition-all hover:border-[#CBD5E1]"
+                    >
+                      {/* Q番号のみ表示（個別のジャンル名は削除） */}
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-bold tracking-wider text-[#64748B] uppercase">
+                          Q{q.id}
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-base sm:text-lg font-bold text-[#000000] mb-2 leading-relaxed">
+                        {q.question}
+                      </h3>
+                      
+                      {q.hint && (
+                        <p className="text-xs text-[#64748B] mb-4 bg-[#F8F9FA] p-2.5 rounded-md border-l-2 border-[#CBD5E1]">
+                          💡 思考のヒント: {q.hint}
+                        </p>
+                      )}
+
+                      {/* 回答欄（プレースホルダー削除済み） */}
+                      <textarea
+                        value={answers[q.id] || ''}
+                        onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                        rows={3}
+                        className="w-full p-3 text-sm border border-[#E2E8F0] rounded-lg focus:outline-none focus:ring-1 focus:ring-black focus:border-black transition-all resize-y text-[#1E293B]"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
 
         <div className="text-center mt-12 mb-8">
