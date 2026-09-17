@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&display=swap');
+
+body {
+  font-family: 'Kiwi Maru', serif;
+}
 @import "tailwindcss";
 
 :root {
-  --bg-color: #F9ebeb;
+  --bg-color: #F9EBED;
   --card-bg: #FFFFFF;
   --text-primary: #3A2321;
   --text-secondary: #7A5B57;
