@@ -1,27 +1,25 @@
+@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&display=swap');
+
+:root {
+  --bg-color: #FAF4F2;
+  --card-bg: #FFFFFF;
+  --text-primary: #382421;
+  --text-secondary: #7D615C;
+  --accent-color: #EEA096;
+}
 
 body {
   font-family: 'Kiwi Maru', serif;
-}
-@import "tailwindcss";
-
-:root {
-  --bg-color: #F9EBED;
-  --card-bg: #FFFFFF;
-  --text-primary: #3A2321;
-  --text-secondary: #7A5B57;
-  --accent-color: #EEA096;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
 @layer base {
   img {
     max-width: 100%;
     height: auto;
-  }
-  body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    min-height: 100vh;
-    overflow-y: auto;
   }
 }
