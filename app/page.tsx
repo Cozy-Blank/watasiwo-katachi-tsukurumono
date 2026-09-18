@@ -82,13 +82,8 @@ export default function Home() {
           />
         </div>
 
-        <header className="text-center mb-10">
-          <h1 
-            style={{ color: '#64748B', fontSize: '15px', fontWeight: '500' }} 
-            className="mb-2 tracking-wide"
-          >
-            自らの美学・存在・思考の深淵と静かに向き合う対話録
-          </h1>
+        {/* ヘッダー：タイトル文言を削除し、回答状況のみ表示 */}
+        <header className="text-center mb-8">
           <p style={{ color: '#94A3B8', fontSize: '12px' }}>
             回答状況: <span style={{ color: '#64748B', fontWeight: '600' }}>{answeredCount}</span> / {questionsList.length} 問
           </p>
@@ -140,14 +135,14 @@ export default function Home() {
                       key={q.id}
                       className="bg-white p-6 rounded-xl shadow-sm border border-[#E2E8F0] transition-all hover:border-[#CBD5E1]"
                     >
-                      {/* Q（質問文）: 15px */}
-                      <h3 style={{ fontSize: '15px', color: '#000000', fontWeight: '600' }} className="mb-2 leading-relaxed">
+                      {/* Q（質問文）: 下の余白をmb-1に詰めてヒントとの距離を短縮 */}
+                      <h3 style={{ fontSize: '15px', color: '#000000', fontWeight: '600' }} className="mb-1 leading-snug">
                         Q{q.id}. {q.question}
                       </h3>
                       
-                      {/* 思考のヒント：Q(15px)より小さめの12pxで構築 */}
+                      {/* 思考のヒント：12px / 行間と余白を短縮してキュッとまとめ */}
                       {q.hint && (
-                        <p style={{ fontSize: '12px', color: '#64748B' }} className="mb-3 bg-[#F8F9FA] px-3 py-1.5 rounded border-l-2 border-[#CBD5E1] inline-block leading-normal">
+                        <p style={{ fontSize: '12px', color: '#64748B' }} className="mb-2 bg-[#F8F9FA] px-2.5 py-1 rounded border-l-2 border-[#CBD5E1] inline-block leading-normal">
                           💡 <span>思考のヒント: {q.hint}</span>
                         </p>
                       )}
