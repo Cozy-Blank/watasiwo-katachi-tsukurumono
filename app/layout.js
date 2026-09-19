@@ -10,6 +10,30 @@ const mPlusRounded = M_PLUS_Rounded_1c({
 export const metadata = {
   title: 'わたしをかたちづくるもの',
   description: '100の偏愛＆クセつよ質問リスト',
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/satasiicon.png',
+    apple: '/satasiicon.png',
+  },
+  openGraph: {
+    title: 'わたしをかたちづくるもの',
+    description: '100の偏愛＆クセつよ質問リスト',
+    images: [
+      {
+        url: '/satasiicon.png',
+        alt: 'わたしをかたちづくるもの アイコン',
+      },
+    ],
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'わたしをかたちづくるもの',
+  },
+};
+
+export const viewport = {
+  themeColor: '#f1f5f9', // bg-slate-100に合わせたヘッダーカラー
 };
 
 export default function RootLayout({ children }) {
