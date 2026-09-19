@@ -6,15 +6,16 @@ const mPlusRounded = M_PLUS_Rounded_1c({
   subsets: ['latin'],
   display: 'swap',
 });
-
 export const metadata = {
-  title: 'わたしをかたちづくるもの',
-  description: '100の偏愛＆クセつよ質問リスト',
+  title: 'watasiwo かたちづくるもの',
+  description: '偏愛Tool',
   manifest: '/manifest.json',
   icons: {
-    icon: '/satasiicon.png',
-    apple: '/satasiicon.png',
+    icon: '/watasiicon.png',
+    apple: '/watasiicon.png',
   },
+}
+
   openGraph: {
     title: 'わたしをかたちづくるもの',
     description: '100の偏愛＆クセつよ質問リスト',
